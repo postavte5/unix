@@ -13,17 +13,17 @@
 <img src="http://i.imgur.com/qvuRY4Z.png" />
 
 <p>IP адрес виртуального сетевого сервиса -10.0.0.25<br />
-Файл параметров создаётся по команде: <code>nano /etc/sysconfig/network-scripts/ifcfg-eth0:1</code></p>
+Файл параметров создаётся по команде: <pre>nano /etc/sysconfig/network-scripts/ifcfg-eth0:1</pre></p>
 
 <img src="http://i.imgur.com/PKVcAzk.png" />
 
 <p>2.Создание скрипта управление службой:<br />
-Осуществляется по команде: <code>nano /etc/init.d/3_4141_Lushnikov</code></p>
+Осуществляется по команде: <pre>nano /etc/init.d/3_4141_Lushnikov</pre></p>
 
 <img src="http://i.imgur.com/HZI23zk.png" />
 
 <p>Исходный текст скрипта:<br />
-<code>#!/bin/bash<br />
+<pre>#!/bin/bash<br />
 # chkconfig: 3 10 90<br />
 # description: eth0:1<br />
 . /etc/init.d/functions<br />
@@ -55,28 +55,28 @@ $0 start<br />
 echo $&quot;Usage: $0 {start|stop|restart|reload|status}&quot;<br />
 exit 1<br />
 esac<br />
-exit 0 </code></p>
+exit 0 </pre></p>
 
 <p>3.Установка прав на исполнение для скрипта управления службой:</p>
 
 <img src="http://i.imgur.com/erd8y8z.png" />
 
 <p>4. Определение состояния созданной службы во всех режимах работы:<br />
-<code>chkconfig --add 3_4141_Lushnikov<br />
-chkconfig --list 3_4141_Lushnikov</code></p>
+<pre>chkconfig --add 3_4141_Lushnikov<br />
+chkconfig --list 3_4141_Lushnikov</pre></p>
 
 <img src="http://i.imgur.com/nvuGC3E.png" />
 
 <p>5.Проверка работоспособности службы:<br />
-<code># /etc/init.d/3_4141_Lushnikov start<br />
-# /etc/init.d/3_4141_Lushnikov status</code></p>
+<pre># /etc/init.d/3_4141_Lushnikov start<br />
+# /etc/init.d/3_4141_Lushnikov status</pre></p>
 
 <img src="http://i.imgur.com/sDKPNSL.png" />
 
 <img src="http://i.imgur.com/rEaxwoB.png" />
 
-<p><code># /etc/init.d/3_4141_Lushnikov stop<br />
-# /etc/init.d/3_4141_Lushnikov status</code></p>
+<p><pre># /etc/init.d/3_4141_Lushnikov stop<br />
+# /etc/init.d/3_4141_Lushnikov status</pre></p>
 
 <img src="http://i.imgur.com/ZE6oSx3.png" />
 </body>
