@@ -1,0 +1,83 @@
+﻿<html>
+<head>
+	<title>Лабораторная работа №3</title>
+</head>
+<body>
+<h2>Лабораторная работа №3</h2>
+
+<p><b>Цель работы:</b> Овладение навыками управления виртуальными сетевыми интерфейсами. Изучение команд управления сетевыми интерфейсами. Изучение синтаксиса и основных операторов командного интерпретатора bash. Приобретение навыков по написанию командных скриптов управления службами.</p>
+
+<hr />
+<p>1. Создание файла параметров, который должен содержать: IP-адрес активируемого интерфейса &ndash; 10.0.0.N, где N &ndash; последний разряд IP адреса eth0, маску подсети активируемого интерфейса &ndash; 255.255.255.0</p>
+
+<img src="http://i.imgur.com/qvuRY4Z.png" />
+
+<p>IP адрес виртуального сетевого сервиса -10.0.0.25<br />
+Файл параметров создаётся по команде: <code>nano /etc/sysconfig/network-scripts/ifcfg-eth0:1</code></p>
+
+<img src="http://i.imgur.com/PKVcAzk.png" />
+
+<p>2.Создание скрипта управление службой:<br />
+Осуществляется по команде: <code>nano /etc/init.d/3_4141_Lushnikov</code></p>
+
+<img src="http://i.imgur.com/HZI23zk.png" />
+
+<p>Исходный текст скрипта:<br />
+<code>#!/bin/bash<br />
+# chkconfig: 3 10 90<br />
+# description: eth0:1<br />
+. /etc/init.d/functions<br />
+if [ ! -f /etc/sysconfig/network ]; then<br />
+exit 0<br />
+fi<br />
+. /etc/sysconfig/network<br />
+if [ -f /etc/sysconfig/network-scripts/ifcfg-eth0:1 ]; then<br />
+. /etc/sysconfig/network-scripts/ifcfg-eth0:1<br />
+fi<br />
+[ &quot;${NETWORKING}&quot; = &quot;no&quot; ] &amp;&amp; exit 0<br />
+[ -x /sbin/ifconfig ] || exit 1<br />
+case &quot;$1&quot; in<br />
+start)<br />
+ifconfig eth0:1 ${IPADDR} netmask ${NETMASK} up<br />
+;;<br />
+stop)<br />
+ifconfig eth0:1 ${IPADDR} netmask ${NETMASK} down<br />
+;;<br />
+status)<br />
+ifconfig<br />
+route<br />
+;;<br />
+restart|reload)<br />
+$0 stop<br />
+$0 start<br />
+;;<br />
+*)<br />
+echo $&quot;Usage: $0 {start|stop|restart|reload|status}&quot;<br />
+exit 1<br />
+esac<br />
+exit 0 </code></p>
+
+<p>3.Установка прав на исполнение для скрипта управления службой:</p>
+
+<img src="http://i.imgur.com/erd8y8z.png" />
+
+<p>4. Определение состояния созданной службы во всех режимах работы:<br />
+<code>chkconfig --add 3_4141_Lushnikov<br />
+chkconfig --list 3_4141_Lushnikov</code></p>
+
+<img src="http://i.imgur.com/nvuGC3E.png" />
+
+<p>5.Проверка работоспособности службы:<br />
+<code># /etc/init.d/3_4141_Lushnikov start<br />
+# /etc/init.d/3_4141_Lushnikov status</code></p>
+
+<img src="http://i.imgur.com/sDKPNSL.png" />
+
+<img src="http://i.imgur.com/rEaxwoB.png" />
+
+<p><code># /etc/init.d/3_4141_Lushnikov stop<br />
+# /etc/init.d/3_4141_Lushnikov status</code></p>
+
+<img src="http://i.imgur.com/ZE6oSx3.png" />
+</body>
+</html>
